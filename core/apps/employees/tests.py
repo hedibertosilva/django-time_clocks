@@ -7,13 +7,13 @@ class TestEmployee(TestCase):
         Employee.objects.create(
             first_name="Hediberto",
             last_name="C. Silva",
-            pis=12071377038,
+            pis=63652448133,
             actived=True)
 
     def test_employees_is_actived(self) -> None:
-        employee = Employee.objects.get(pis=12071377038)
+        employee = Employee.objects.get(pis=63652448133)
         self.assertEqual(employee.is_actived(), True)
         
-    def test_employees_is_valid(self) -> None:
-        employee = Employee.objects.get(pis=12071377038)
-        self.assertEqual(employee.is_valid(), True)
+    def test_employees_is_valid_pis(self) -> None:
+        employee = Employee.objects.get(pis=63652448133)
+        self.assertEqual(employee.is_valid_pis(), True)

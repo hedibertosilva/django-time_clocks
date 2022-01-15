@@ -1,3 +1,4 @@
+from math import remainder
 from django.db import models
 
 
@@ -10,13 +11,24 @@ class Employee(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
 
     def __str__(self) -> str:
-        return "{} {}" % (self.first_name, self.last_name)
+        return "%s %s" % (self.first_name, self.last_name)
 
     def is_actived(self):
         return self.actived == True
 
-    def is_valid(self):
-        return len(str(self.pis)) == 11
+    def is_valid_pis(self):
+        pis = f'{self.pis:011}'
+        digit = int(pis[-1])
+        weights = (3, 2, 9, 8, 7, 6, 5, 4, 3, 2)
+
+        remainder = sum(int(n) * w for n, w in zip(pis, weights))%11
+        remainder = 11 - remainder
+        
+        if remainder in (10, 11):
+            return True if digit == 0 else False
+        if remainder != digit:
+            return False
+        return True
 
     class Meta:
         default_related_name = "employee"
